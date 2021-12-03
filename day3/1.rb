@@ -6,16 +6,16 @@ end
 #flip the array
 data = data.transpose
 
+#Find the most common value (0 or 1) in every column (row now as we transposed the array)
 common_string = ''
-
 for i in 0...data.length
     column = data[i]
     common_value = column.group_by(&:itself).values.max_by(&:size).first
     common_string += common_value
 end
 
+#Basically get the opposite of the most common string (1 -> 0 and 0 -> 1)
 uncommon_string = ''
-
 for i in 0...common_string.length
     letter = common_string[i]
     if letter == '0'
