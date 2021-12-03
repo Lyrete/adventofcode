@@ -5,4 +5,4 @@ Completing 2021's https://adventofcode.com/ with Ruby as a learning exercise (co
 |-------|-------|--------|
 | Day 1 | [Solution](day1/1.rb) | [Solution](day1/2.rb) |
 | Day 2 | [Solution](day2/1.rb) | [Solution](day2/1.rb) |
-| Day 3 | [Solution](day3/1.rb) |  |
+| Day 3 | [Solution](day3/1.rb) | [Solution](day3/2.rb) |
