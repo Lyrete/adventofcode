@@ -1,4 +1,4 @@
-# adventofcode
+# Advent of Code 2021
 Completing 2021's https://adventofcode.com/ with Ruby as a learning exercise (completely new to Ruby)
 
 | __Day__   | __First task__ | __Second task__ |
