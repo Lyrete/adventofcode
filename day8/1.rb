@@ -132,7 +132,7 @@ def sum_all(numbers, outputs)
     return count
 end
 
-#helper since apparently values can be in a different order than the one we were given (should've used arrays)
+#helper since our hash doesn't necessarily have the output string in the right order (should've used arrays)
 def check_value(str1, definite_numbers)
     definite_numbers.each do |key, value|
         diff = find_diff str1, value
