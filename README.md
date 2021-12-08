@@ -10,5 +10,6 @@ Completing 2021's https://adventofcode.com/ with Ruby as a learning exercise (co
 | Day 5 | [Solution](day5/1.rb) | [Solution](day5/2.rb) |
 | Day 6 | [Solution](day6/1.rb) | [Solution](day6/2.rb) |
 | Day 7 | [Solution](day7/1.rb) | [Solution](day7/1.rb) |
+| Day 8 | [Solution](day8/1.rb) | [Solution](day8/1.rb) |
 
 There are also some solutions to previous year's problems in the same repo
