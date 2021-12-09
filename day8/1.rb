@@ -18,13 +18,9 @@ def solve_display(display, output)
     for number in display
         if definite_lengths.key?(number.size)
             definite_numbers[definite_lengths[number.size]] = number
+            display.delete(number) #delete the number so we don't have to iterate over it later
         end
     end
-
-    #delete the values we solved this way
-    definite_numbers.each_value do |value|
-        display.delete(value)
-    end    
 
     #7 and 1 have a difference of only one line so we can deduce the top line from this
     diff = find_diff definite_numbers[7], definite_numbers[1]
@@ -154,8 +150,3 @@ p sum_easy outputs
 
 puts "Task 2:"
 p sum_all numbers, outputs
-
-
-
-
-
