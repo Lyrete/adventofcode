@@ -30,6 +30,7 @@ def increment(grid):
         for x in range(len(row)):
             flash(x, y, grid)
 
+#We could optimize by doing the flash count and changes to 0 while looping through but it's a hassle
 def remove_overflow(grid):
     count = 0
     for y in range(len(grid)):
