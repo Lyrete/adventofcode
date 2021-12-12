@@ -1,5 +1,5 @@
 # Advent of Code 2021
-Completing 2021's https://adventofcode.com/ with Ruby as a learning exercise (completely new to Ruby)
+Completing 2021's https://adventofcode.com/ with Ruby and/or Python, depending how I'm feeling on the day 😄
 
 | __Day__   | __First task__ | __Second task__ |
 |-------|-------|--------|
@@ -11,5 +11,9 @@ Completing 2021's https://adventofcode.com/ with Ruby as a learning exercise (co
 | Day 6 | [Solution](day6/1.rb) | [Solution](day6/2.rb) |
 | Day 7 | [Solution](day7/1.rb) | [Solution](day7/1.rb) |
 | Day 8 | [Solution](day8/1.rb) | [Solution](day8/1.rb) |
+| Day 9 | [Solution](day9/1.rb) |  |
+| Day 10 |  |  |
+| Day 12 | [Solution](day12/1.py) |  |
+| Day 13 |  | |
 
 There are also some solutions to previous year's problems in the same repo
