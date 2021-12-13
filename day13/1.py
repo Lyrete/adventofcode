@@ -3,14 +3,13 @@ ins = []
 
 #Helper for visualizing
 def print_grid(values):
-    grid = [['.'] * 80] * 15
+    grid = [[' '] * 80] * 8
 
-    print(values)
 
     for y in range(len(grid)):
         for x in range(len(grid[y])):
             if (x,y) in values:
-                print('#', end='')
+                print('█', end='')
             else:
                 print(grid[y][x], end='')
         print()
@@ -50,8 +49,7 @@ for i in ins:
         newset.add((x,y))
 
     points = newset
-    print(f'Run {idx}:')
-    print(len(points))
+    print(f'Fold {idx}: {len(points)}')
 
     idx += 1
 
