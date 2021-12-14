@@ -20,7 +20,7 @@ with open('data.txt') as f:
         else:
             for letter in ins[0]:
                 letters[letter] += 1
-            split = re.findall('..', ins[0]) + re.findall('..', ins[0][1:])
+            split = re.findall('..', ins[0] + ins[0][1:])
             for pair in split:
                 pairs[pair] += 1
             
