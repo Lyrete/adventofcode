@@ -18,7 +18,7 @@ Completing 2021's https://adventofcode.com/ with Ruby and/or Python, depending h
 | Day 13 | [Solution](day13/1.py) | [Solution](day13/1.py) |
 | Day 14 | [Solution](day14/1.py) | [Solution](day14/1.py) |
 | Day 15 | [Solution](day15/1.py) | [Solution](day15/2.py) |
-| Day 16 |  |  |
+| Day 16 | [Solution](day16/1.py) | [Solution](day16/1.py) |
 | Day 17 | [Solution](day17/1.py) | [Solution](day17/1.py) |
 
 There are also some solutions to previous year's problems in the same repo
