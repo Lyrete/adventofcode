@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-  "sort"
+	"sort"
 )
 
 func printSlice(s []int) {
@@ -49,9 +49,9 @@ func main() {
 
 	carried = append(carried, load)
 
-  sort.Slice(carried, func (i, j int) bool  {
-    return carried[i] > carried[j]
-  })
+	sort.Slice(carried, func(i, j int) bool {
+		return carried[i] > carried[j]
+	})
 
 	//printSlice(carried)
 
