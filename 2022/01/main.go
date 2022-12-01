@@ -4,28 +4,11 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+  "sort"
 )
 
 func printSlice(s []int) {
 	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
-}
-
-func RemoveIndex(s []int, index int) []int {
-	ret := make([]int, 0)
-	ret = append(ret, s[:index]...)
-	return append(ret, s[index+1:]...)
-}
-
-func findMax(s []int) (int, int) {
-	var max int = s[0]
-	var maxIdx int = 0
-	for i, value := range s {
-		if max < value {
-			max = value
-			maxIdx = i
-		}
-	}
-	return maxIdx, max
 }
 
 func main() {
@@ -66,16 +49,14 @@ func main() {
 
 	carried = append(carried, load)
 
+  sort.Slice(carried, func (i, j int) bool  {
+    return carried[i] > carried[j]
+  })
+
 	//printSlice(carried)
 
-	idx, max := findMax(carried)
-	carried = RemoveIndex(carried, idx)
-	idx, max2 := findMax(carried)
-	carried = RemoveIndex(carried, idx)
-	idx, max3 := findMax(carried)
+	maxTop3 := carried[0] + carried[1] + carried[2]
 
-	maxTop3 := max + max2 + max3
-
-	fmt.Printf("First task, max carried: %d\n", max)
+	fmt.Printf("First task, max carried: %d\n", carried[0])
 	fmt.Printf("Second task, top 3 carried: %d\n", maxTop3)
 }
