@@ -5,7 +5,6 @@ const CHARS: &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 fn task1() {
     let lines: Vec<_> = include_str!("./data.txt")
         .lines()
-        .map(|n| n)
         .map(|n| n.split_at(n.len() / 2))
         .map(|(c1, c2)| {
             (
