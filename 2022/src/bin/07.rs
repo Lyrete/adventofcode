@@ -37,7 +37,7 @@ fn main() {
                     .or_insert(split_line[0].parse().unwrap());
             }
         } else {
-            if "dir" == &split_line[1] {
+            if "ls" == &split_line[1] {
                 continue;
             }
 
