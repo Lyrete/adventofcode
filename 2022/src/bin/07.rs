@@ -1,9 +1,11 @@
 use std::collections::BTreeMap;
+use std::time::Instant;
 
 const MAX_FS_SIZE: i32 = 70000000;
 const TARGET_UNUSED_SIZE: i32 = 30000000;
 
 fn main() {
+    let now = Instant::now();
     let input: Vec<String> = include_str!("./data7.txt")
         .lines()
         .map(str::to_string)
@@ -69,4 +71,5 @@ fn main() {
 
     println!("Task 1: {:?}", over100k_sum);
     println!("Task 2: {:?}", smallest_dir);
+    println!("Elapsed: {:?}", now.elapsed());
 }
