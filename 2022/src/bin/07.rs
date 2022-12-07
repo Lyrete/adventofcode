@@ -1,5 +1,8 @@
 use std::collections::BTreeMap;
 
+const MAX_FS_SIZE: i32 = 70000000;
+const TARGET_UNUSED_SIZE: i32 = 30000000;
+
 fn main() {
     let mut input = include_str!("./data7.txt").lines();
 
@@ -59,13 +62,13 @@ fn main() {
         .filter(|v| *v <= &100000)
         .sum::<i32>();
 
-    let unused_space = 70000000 - fs_sizes.get("/").unwrap();
+    let unused_space = MAX_FS_SIZE - fs_sizes.get("/").unwrap();
 
     let smallest_dir: i32 = *fs_sizes
         .iter()
-        .map(|(_, v)| v)
-        .map(|v| (v, unused_space - 30000000 + v))
-        .filter(|(_, c)| c > &0)
+        //Map to tuple of (val, unused space if removed)
+        .map(|(_, v)| (v, unused_space - TARGET_UNUSED_SIZE + v))
+        .filter(|(_, c)| c > &0) //Any positive val works
         .map(|(v, _)| v)
         .min()
         .unwrap();
