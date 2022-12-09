@@ -1,6 +1,9 @@
 use std::collections::HashSet;
+use std::time::Instant;
 
 fn main() {
+    let time = Instant::now();
+
     let grid: Vec<_> = include_str!("./data8.txt")
         .lines()
         .map(str::to_string)
@@ -88,12 +91,16 @@ fn main() {
 
     let mut highest = 0;
     for (x, y) in visible.iter() {
+        if x == &0 || y == &0 || *x == size - 1 || *y == size - 1 {
+            continue;
+        }
         let score = check_score(*x, *y, grid.to_vec());
         if score > highest {
             highest = score;
         }
     }
     println!("Task 2: {}", highest);
+    println!("Took: {:?}", time.elapsed());
 }
 
 fn check_score(x: usize, y: usize, grid: Vec<Vec<u32>>) -> usize {
@@ -102,10 +109,12 @@ fn check_score(x: usize, y: usize, grid: Vec<Vec<u32>>) -> usize {
 
     let mut score = 0;
 
+    let line = &grid[y];
+
     let mut left_trees = 0;
     for lx in (0..x).rev() {
         left_trees += 1;
-        if grid[y][lx] >= tree {
+        if line[lx] >= tree {
             break;
         }
     }
@@ -113,7 +122,7 @@ fn check_score(x: usize, y: usize, grid: Vec<Vec<u32>>) -> usize {
     let mut right_trees = 0;
     for rx in x + 1..GRID_SIZE {
         right_trees += 1;
-        if grid[y][rx] >= tree {
+        if line[rx] >= tree {
             break;
         }
     }
