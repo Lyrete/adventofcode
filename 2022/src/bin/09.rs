@@ -41,12 +41,12 @@ fn move_towards(head: (isize, isize), tail: &mut (isize, isize)) {
         return;
     }
 
-    let edges = HashSet::from([
+    let edges = vec![
         (head.0, head.1 - 1),
         (head.0, head.1 + 1),
         (head.0 + 1, head.1),
         (head.0 - 1, head.1),
-    ]);
+    ];
 
     let mut dest = tail.clone();
 
@@ -66,12 +66,12 @@ fn move_towards(head: (isize, isize), tail: &mut (isize, isize)) {
         return;
     }
 
-    let corners = HashSet::from([
+    let corners = vec![
         (head.0 - 1, head.1 - 1),
         (head.0 - 1, head.1 + 1),
         (head.0 + 1, head.1 + 1),
         (head.0 + 1, head.1 - 1),
-    ]);
+    ];
 
     let mut dest = tail.clone();
 
