@@ -42,13 +42,17 @@ fn move_towards(head: (isize, isize), tail: &mut (isize, isize)) {
     }
 
     let edges = vec![
+        //edges
         (head.0, head.1 - 1),
         (head.0, head.1 + 1),
         (head.0 + 1, head.1),
         (head.0 - 1, head.1),
+        //corners
+        (head.0 - 1, head.1 - 1),
+        (head.0 - 1, head.1 + 1),
+        (head.0 + 1, head.1 + 1),
+        (head.0 + 1, head.1 - 1),
     ];
-
-    let mut dest = tail.clone();
 
     for edge in edges.iter() {
         let dy = edge.0 - tail.0;
@@ -56,37 +60,10 @@ fn move_towards(head: (isize, isize), tail: &mut (isize, isize)) {
 
         let c_dist = dy.abs().max(dx.abs());
         if c_dist == 1 {
-            dest = *edge;
+            *tail = *edge;
+            return;
         }
     }
-
-    //Seems like we found an edge close enough
-    if dest != *tail {
-        *tail = dest;
-        return;
-    }
-
-    let corners = vec![
-        (head.0 - 1, head.1 - 1),
-        (head.0 - 1, head.1 + 1),
-        (head.0 + 1, head.1 + 1),
-        (head.0 + 1, head.1 - 1),
-    ];
-
-    let mut dest = tail.clone();
-
-    for edge in corners.iter() {
-        let dy = edge.0 - tail.0;
-        let dx = edge.1 - tail.1;
-
-        let c_dist = dy.abs().max(dx.abs());
-        if c_dist == 1 {
-            dest = *edge;
-        }
-    }
-
-    //Seems like we found an edge close enough
-    *tail = dest;
 }
 
 fn move_head(head: &mut (isize, isize), dir: Dir) {
