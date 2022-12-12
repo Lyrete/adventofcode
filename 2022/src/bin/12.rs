@@ -4,14 +4,14 @@ use std::time::Instant;
 
 const CHARS: &str = "abcdefghijklmnopqrstuvwxyz";
 
-fn adjacents(grid: &Vec<Vec<char>>, point: (usize, usize)) -> Vec<(usize, usize)> {
-    let mut edges: Vec<(usize, usize)> = Vec::new();
+fn adjacents(grid: &Vec<Vec<char>>, point: &(u16, u16)) -> Vec<(u16, u16)> {
+    let mut edges: Vec<(u16, u16)> = Vec::new();
 
     if point.0 > 0 {
         edges.push((point.0 - 1, point.1));
     }
 
-    if point.0 < grid[0].len() - 1 {
+    if point.0 < grid[0].len() as u16 - 1 {
         edges.push((point.0 + 1, point.1));
     }
 
@@ -19,7 +19,7 @@ fn adjacents(grid: &Vec<Vec<char>>, point: (usize, usize)) -> Vec<(usize, usize)
         edges.push((point.0, point.1 - 1));
     }
 
-    if point.1 < grid.len() - 1 {
+    if point.1 < grid.len() as u16 - 1 {
         edges.push((point.0, point.1 + 1));
     }
 
@@ -31,8 +31,8 @@ struct TaskResult {
     task2: u16,
 }
 
-fn find_paths(grid: &Vec<Vec<char>>, start: (usize, usize), end: (usize, usize)) -> TaskResult {
-    let mut paths: HashMap<(usize, usize), usize> = HashMap::new();
+fn find_paths(grid: &Vec<Vec<char>>, start: (u16, u16), end: (u16, u16)) -> TaskResult {
+    let mut paths: HashMap<(u16, u16), usize> = HashMap::new();
 
     let mut result = TaskResult {
         task1: 0,
@@ -55,13 +55,17 @@ fn find_paths(grid: &Vec<Vec<char>>, start: (usize, usize), end: (usize, usize))
             result.task1 = priority;
         }
 
-        if grid[current.1][current.0] == 'a' && result.task2 > priority {
+        if grid[current.1 as usize][current.0 as usize] == 'a' && result.task2 > priority {
             result.task2 = priority;
         }
 
-        for neighbor in adjacents(grid, current).iter() {
-            let slope: isize = CHARS.find(grid[neighbor.1][neighbor.0]).unwrap() as isize
-                - CHARS.find(grid[current.1][current.0]).unwrap() as isize;
+        for neighbor in adjacents(grid, &current).iter() {
+            let slope: isize = CHARS
+                .find(grid[neighbor.1 as usize][neighbor.0 as usize])
+                .unwrap() as isize
+                - CHARS
+                    .find(grid[current.1 as usize][current.0 as usize])
+                    .unwrap() as isize;
 
             if slope < -1 {
                 continue;
@@ -77,7 +81,6 @@ fn find_paths(grid: &Vec<Vec<char>>, start: (usize, usize), end: (usize, usize))
         }
     }
 
-    print_visited(paths.keys().map(|x| *x).collect(), &grid);
     result
 }
 
@@ -89,15 +92,21 @@ fn main() {
         .collect();
 
     let mut grid: Vec<Vec<char>> = Vec::new();
-    let mut start = (100000, 100000);
-    let mut end = (0, 0);
+    let mut start: (u16, u16) = (0, 0);
+    let mut end: (u16, u16) = (0, 0);
 
     for (idx, line) in lines.iter().enumerate() {
         if line.contains(&'S') {
-            start = (line.iter().position(|&c| c == 'S').unwrap(), idx);
+            start = (
+                line.iter().position(|&c| c == 'S').unwrap() as u16,
+                idx as u16,
+            );
         }
         if line.contains(&'E') {
-            end = (line.iter().position(|&c| c == 'E').unwrap(), idx);
+            end = (
+                line.iter().position(|&c| c == 'E').unwrap() as u16,
+                idx as u16,
+            );
         }
         grid.push(
             line.clone()
@@ -117,35 +126,8 @@ fn main() {
 
     let result = find_paths(&grid, start, end);
     println!(
-        "Task 1 path: {:?}, Task 2 path: {:?}",
+        "Task 1 path length: {:?}\nTask 2 path length: {:?}",
         result.task1, result.task2
     );
     println!("Elapsed: {:?}", now.elapsed());
-
-    let char_map: Vec<_> = include_str!("./data12.txt")
-        .lines()
-        .enumerate()
-        .map(|(y, line)| (line.chars().collect::<Vec<char>>(), y))
-        .collect();
-
-    println!("{:?}", char_map);
-}
-
-fn print_grid(grid: &Vec<Vec<char>>) {
-    for line in grid.iter() {
-        println!(
-            "{}",
-            line.iter().fold(String::new(), |a, b| a + &b.to_string())
-        );
-    }
-}
-
-fn print_visited(visited: Vec<(usize, usize)>, values: &Vec<Vec<char>>) {
-    let mut grid = vec![vec![' '; values[0].len()]; values.len()];
-
-    for (x, y) in visited.iter() {
-        grid[*y][*x] = values[*y][*x];
-    }
-
-    print_grid(&grid);
 }
