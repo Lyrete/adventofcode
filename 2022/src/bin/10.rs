@@ -17,7 +17,7 @@ fn t1_better(instructions: &Vec<i16>) {
         let chunk = if i == 0 {
             &instructions[0..19]
         } else {
-            &instructions[40 * i - 20 - 1..20 + 40 * i - 1]
+            &instructions[40 * i - 21..19 + 40 * i]
         };
         x += chunk.iter().sum::<i16>();
         t1 += (20 + 40 * i) as i16 * x;
