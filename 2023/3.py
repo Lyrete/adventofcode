@@ -46,9 +46,7 @@ def solve(input: str) -> (int, int):
             validNumber = False
             gear = None
             while char.isdigit():
-                if check(x, y, symbols):
-                    validNumber = True
-
+                validNumber = check(x, y, symbols)
                 for sym in gears.keys():
                     if chebyshev((x, y), sym):
                         gear = sym
