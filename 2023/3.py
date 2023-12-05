@@ -10,7 +10,7 @@ example = """467..114..
 .664.598.."""
 
 
-def check(x, y, coords) -> bool:
+def check(x: int, y: int, coords: list[tuple[int, int]]) -> bool:
     for cx, cy in coords:
         dist = chebyshev((x, y), (cx, cy))
         if dist == 1:
@@ -18,14 +18,14 @@ def check(x, y, coords) -> bool:
     return False
 
 
-def chebyshev(pos1: (int, int), pos2: (int, int)) -> bool:
+def chebyshev(pos1: tuple[int, int], pos2: tuple[int, int]) -> bool:
     return max(abs(pos1[0] - pos2[0]), abs(pos1[1] - pos2[1])) == 1
 
 
 def solve(input: str) -> (int, int):
     lines = input.splitlines()
     symbols = []
-    gears = {}
+    gears: dict[tuple[int, int], tuple[int, int]] = {}
 
     for y in range(0, len(lines)):
         # loop over each char in line
