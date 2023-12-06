@@ -1,5 +1,4 @@
-from operator import le
-import sys
+import time
 
 
 example = """seeds: 82 14 55 13
@@ -75,7 +74,7 @@ def solve2(s: str) -> int:
             new.append((dest_start, source_start, length))
         conversions.append(new)
 
-    seed_ranges = seed_ranges[:-1]
+    seed_ranges = seed_ranges
 
     for conv in conversions:
         seed_range_amount = len(seed_ranges)
@@ -111,13 +110,22 @@ def solve2(s: str) -> int:
     return min([x for x, y in seed_ranges])
 
 
-ex1, ex2 = solve(example), solve2(example)
+def solveRealInput():
+    in_str = open("data/5.txt").read().strip()
+    s1, s2 = solve(in_str), solve2(in_str)
 
-print(ex1, ex2)
+    return s1, s2
 
-in_str = open("data/5.txt").read().strip()
 
-s1, s2 = solve(in_str), solve2(in_str)
+total_time = 0
 
-print(s1)
-print(s2)
+for i in range(1000):
+    time_start = time.perf_counter()
+    s1, s2 = solveRealInput()
+    time_end = time.perf_counter()
+    total_time += time_end - time_start
+
+print(f"Total time (1000 runs): {total_time:.4f} seconds")
+print(f"Average time: {total_time / 1000:.4f} seconds")
+print(f"Part 1: {s1}")
+print(f"Part 2: {s2}")
