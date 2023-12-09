@@ -22,7 +22,7 @@ def parse(s: str):
     return path, rules, starts
 
 
-def lcm(nums):
+def lcm(nums: list[int]):
     return reduce(lambda a, b: a * b // math.gcd(a, b), nums)
 
 
