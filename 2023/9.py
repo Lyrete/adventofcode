@@ -25,8 +25,6 @@ def solve(s: str) -> int:
 
         for i in reversed(range(1, len(last))):
             last[i-1] = last[i-1] + last[i]
-
-        for i in reversed(range(1, len(first))):
             first[i-1] = first[i-1] - first[i]
 
         result2 += first[0]
