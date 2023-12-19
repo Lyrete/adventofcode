@@ -25,7 +25,7 @@ class Part:
     def compare_value(self, attr: str, compare_to: int, op: str) -> bool:
         match op:
             case "<": return getattr(self, attr) < compare_to
-            case ">": getattr(self, attr) > compare_to
+            case ">": return getattr(self, attr) > compare_to
 
     def split_on_op(self, attr: str, middle: int, op: str):
         c = getattr(self, attr)
@@ -82,8 +82,7 @@ def parse(s: str) -> tuple[list, list[Part]]:
         part = Part()
         for e in vals:
             attr, val = e.split("=")
-            val = int(val)
-            part.set_value(attr, val)
+            setattr(part, attr, int(val))
         parts.append(part)
 
     return flows, parts
