@@ -1,9 +1,8 @@
 package main
 
 import (
+	"aoc_helpers"
 	"fmt"
-	"log"
-	"os"
 	"slices"
 	"strconv"
 	"strings"
@@ -21,17 +20,8 @@ func main() {
 	fmt.Println(solve(example))
 
 	fmt.Println("Real:")
-	fmt.Println(solve(getInputFromFile("01")))
+	fmt.Println(solve(aoc_helpers.GetInputFromFile("01")))
 
-}
-
-func getInputFromFile(day string) string {
-	filename := "data/" + day + ".txt"
-	cnt, err := os.ReadFile(filename)
-	if err != nil {
-		log.Fatal("Failed to read file")
-	}
-	return strings.Trim(string(cnt), "\n ")
 }
 
 func solve(input string) (int, int) {
@@ -56,19 +46,8 @@ func solve(input string) (int, int) {
 
 	for i, l := range left {
 		r := right[i]
-		res += absInt(r - l)
+		res += aoc_helpers.AbsInt(r - l)
 		res2 += l * occurences[l]
 	}
 	return res, res2
-}
-
-func absInt(x int) int {
-	return absDiffInt(x, 0)
-}
-
-func absDiffInt(x, y int) int {
-	if x < y {
-		return y - x
-	}
-	return x - y
 }
