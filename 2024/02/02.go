@@ -59,16 +59,14 @@ func solve(input string) (int, int) {
 }
 
 func isRowSafe(row []string) bool {
-	safe_row := true
 	for i := len(row) - 1; i > 1; i-- {
 		l, _ := strconv.Atoi(row[i-2])
 		c, _ := strconv.Atoi(row[i-1])
 		r, _ := strconv.Atoi(row[i])
 		if aoc_helpers.AbsDiffInt(c, r) > 3 || aoc_helpers.AbsDiffInt(c, r) < 1 || (r-c)*(c-l) <= 0 || aoc_helpers.AbsDiffInt(c, l) > 3 || aoc_helpers.AbsDiffInt(c, l) < 1 {
-			safe_row = false
-			break
+			return false
 		}
 	}
 
-	return safe_row
+	return true
 }
