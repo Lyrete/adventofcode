@@ -28,7 +28,7 @@ func (c *Coord) move(in Coord) {
 	c.y += in.y
 }
 
-func (c Coord) add2(x int, y int) Coord {
+func (c Coord) addXY(x int, y int) Coord {
 	c.x += x
 	c.y += y
 
@@ -92,7 +92,7 @@ func findFullXmas(places map[rune][]Coord, searchable rune, curr Coord, dir Coor
 }
 
 func findCrossedMas(coords map[Coord]rune, center Coord) int {
-	surrounding := string([]rune{coords[center.add2(1, 1)], coords[center.add2(1, -1)], coords[center.add2(-1, -1)], coords[center.add2(-1, 1)]})
+	surrounding := string([]rune{coords[center.addXY(1, 1)], coords[center.addXY(1, -1)], coords[center.addXY(-1, -1)], coords[center.addXY(-1, 1)]})
 	if surrounding == "MSSM" || surrounding == "MMSS" || surrounding == "SMMS" || surrounding == "SSMM" {
 		return 1
 	}
