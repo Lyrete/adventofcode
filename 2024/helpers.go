@@ -1,8 +1,11 @@
 package aoc_helpers
 
 import (
+	"bufio"
+	"bytes"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -28,4 +31,30 @@ func AbsDiffInt(x, y int) int {
 		return y - x
 	}
 	return x - y
+}
+
+func ParseIntoIntSlice(input string) []int {
+	separators := []byte{byte(',')}
+	scanner := bufio.NewScanner(strings.NewReader(input))
+	scanner.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) {
+		if atEOF && len(data) == 0 {
+			return 0, nil, nil
+		}
+
+		if i := bytes.Index(data, separators); i >= 0 {
+			return i + 1, data[0:i], nil
+		}
+
+		if atEOF {
+			return len(data), data, nil
+		}
+
+		return 0, nil, nil
+	})
+	ret := []int{}
+	for scanner.Scan() {
+		v, _ := strconv.Atoi(scanner.Text())
+		ret = append(ret, v)
+	}
+	return ret
 }
