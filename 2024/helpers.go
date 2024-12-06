@@ -58,3 +58,30 @@ func ParseIntoIntSlice(input string) []int {
 	}
 	return ret
 }
+
+type Coord struct {
+	X int
+	Y int
+}
+
+func (c *Coord) Move(in Coord) {
+	c.X += in.X
+	c.Y += in.Y
+}
+
+func (c *Coord) MoveXY(x int, y int) {
+	c.X += x
+	c.Y += y
+}
+
+func (c Coord) AddXY(x int, y int) Coord {
+	c.X += x
+	c.Y += y
+
+	return c
+}
+
+func (c *Coord) Set(x int, y int) {
+	c.X = x
+	c.Y = y
+}
