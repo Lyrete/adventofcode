@@ -20,48 +20,29 @@ func solve(input string) (int, int) {
 			convInstructions[i] = conv
 		}
 
-		noConcatResult := findRowSolution(convInstructions[1:], convInstructions[0], expectedVal, false)
-		res += noConcatResult
-		if noConcatResult == 0 {
-			res2 += findRowSolution(convInstructions[1:], convInstructions[0], expectedVal, true)
+		if checkIfValidRow(convInstructions[1:], convInstructions[0], expectedVal, false) {
+			res += expectedVal
+		} else if checkIfValidRow(convInstructions[1:], convInstructions[0], expectedVal, true) {
+			res2 += expectedVal
 		}
 	}
 
 	return res, res + res2
 }
 
-func findRowSolution(instructions []int, prev int, expectedValue int, withConcat bool) int {
+func checkIfValidRow(instructions []int, prev int, expectedValue int, withConcat bool) bool {
 	if prev > expectedValue {
-		return 0
+		return false
 	}
 
 	multiply := prev * instructions[0]
 	addition := prev + instructions[0]
 	concat, _ := strconv.Atoi(strconv.Itoa(prev) + strconv.Itoa(instructions[0]))
-
 	if len(instructions) == 1 {
-		switch expectedValue {
-		case multiply:
-			return multiply
-		case addition:
-			return addition
-		case concat:
-			return concat
-		default:
-			return 0
-
-		}
+		return multiply == expectedValue || addition == expectedValue || (withConcat && concat == expectedValue)
 	}
 
-	concatAddition := 0
-
-	recMultiply := findRowSolution(instructions[1:], multiply, expectedValue, withConcat)
-	recAddition := findRowSolution(instructions[1:], addition, expectedValue, withConcat)
-	if withConcat {
-		concatAddition = findRowSolution(instructions[1:], concat, expectedValue, withConcat)
-	}
-
-	return max(recAddition, recMultiply, concatAddition)
+	return checkIfValidRow(instructions[1:], multiply, expectedValue, withConcat) || checkIfValidRow(instructions[1:], addition, expectedValue, withConcat) || (withConcat && checkIfValidRow(instructions[1:], concat, expectedValue, withConcat))
 }
 
 func main() {
