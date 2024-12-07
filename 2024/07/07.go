@@ -38,6 +38,28 @@ func solve(input string) (int, int) {
 	return res, res + res2
 }
 
+func solveForward(input string) (int, int) {
+	res, res2 := 0, 0
+	for _, line := range strings.Split(input, "\n") {
+		parts := strings.Split(line, ":")
+		expectedVal, _ := strconv.Atoi(parts[0])
+		instructions := strings.Fields(parts[1])
+		convInstructions := make([]int, len(instructions))
+		for i, in := range instructions {
+			conv, _ := strconv.Atoi(in)
+			convInstructions[i] = conv
+		}
+
+		if checkIfValidRow(convInstructions[1:], convInstructions[0], expectedVal, false) {
+			res += expectedVal
+		} else if checkIfValidRow(convInstructions[1:], convInstructions[0], expectedVal, true) {
+			res2 += expectedVal
+		}
+	}
+
+	return res, res + res2
+}
+
 func checkIfValidRow(instructions []int, prev int, expectedValue int, withConcat bool) bool {
 	if prev > expectedValue {
 		return false
