@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aoc_helpers"
+	"aoc"
 	"fmt"
 	"slices"
 	"strconv"
@@ -20,7 +20,7 @@ func main() {
 	fmt.Println(solve(example))
 
 	fmt.Println("Real:")
-	fmt.Println(solve(aoc_helpers.GetInputFromFile("01")))
+	fmt.Println(solve(aoc.GetInputFromFile("01")))
 
 }
 
@@ -46,7 +46,7 @@ func solve(input string) (int, int) {
 
 	for i, l := range left {
 		r := right[i]
-		res += aoc_helpers.AbsInt(r - l)
+		res += aoc.AbsInt(r - l)
 		res2 += l * occurences[l]
 	}
 	return res, res2

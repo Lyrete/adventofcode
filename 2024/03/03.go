@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aoc_helpers"
+	"aoc"
 	"fmt"
 	"slices"
 	"strconv"
@@ -15,7 +15,7 @@ func main() {
 	fmt.Println(solve(example))
 
 	fmt.Println("Real:")
-	fmt.Println(solve(aoc_helpers.GetInputFromFile("03")))
+	fmt.Println(solve(aoc.GetInputFromFile("03")))
 }
 
 func solve(input string) (int, int) {

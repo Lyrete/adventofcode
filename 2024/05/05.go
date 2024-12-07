@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aoc_helpers"
+	"aoc"
 	"fmt"
 	"slices"
 	"strconv"
@@ -22,7 +22,7 @@ func solve(input string) (int, int) {
 	res := 0
 	res2 := 0
 	for _, pagesString := range strings.Split(chunks[1], "\n") {
-		slice := aoc_helpers.ParseIntoIntSlice(pagesString)
+		slice := aoc.ParseIntoIntSlice(pagesString)
 		valid := slices.IsSortedFunc(slice, sorting)
 		if !valid {
 			slices.SortFunc(slice, sorting)
@@ -54,7 +54,7 @@ func main() {
 	fmt.Println(solve(example))
 
 	fmt.Println("Real:")
-	fmt.Println(solve(aoc_helpers.GetInputFromFile("05")))
+	fmt.Println(solve(aoc.GetInputFromFile("05")))
 }
 
 const example = `47|53

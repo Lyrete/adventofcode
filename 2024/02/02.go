@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aoc_helpers"
+	"aoc"
 	"fmt"
 	"slices"
 	"strconv"
@@ -20,7 +20,7 @@ func main() {
 	fmt.Println(solve(example))
 
 	fmt.Println("Real:")
-	fmt.Println(solve(aoc_helpers.GetInputFromFile("02")))
+	fmt.Println(solve(aoc.GetInputFromFile("02")))
 
 }
 
@@ -63,7 +63,7 @@ func isRowSafe(row []string) bool {
 		l, _ := strconv.Atoi(row[i-2])
 		c, _ := strconv.Atoi(row[i-1])
 		r, _ := strconv.Atoi(row[i])
-		if aoc_helpers.AbsDiffInt(c, r) > 3 || aoc_helpers.AbsDiffInt(c, r) < 1 || (r-c)*(c-l) <= 0 || aoc_helpers.AbsDiffInt(c, l) > 3 || aoc_helpers.AbsDiffInt(c, l) < 1 {
+		if aoc.AbsDiffInt(c, r) > 3 || aoc.AbsDiffInt(c, r) < 1 || (r-c)*(c-l) <= 0 || aoc.AbsDiffInt(c, l) > 3 || aoc.AbsDiffInt(c, l) < 1 {
 			return false
 		}
 	}
