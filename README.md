@@ -1,3 +1,3 @@
 # Advent of Code
 
-This repo contains my solutions to AoC problems from random years, organized to folders. If running solutions most expect the input to be in data.txt and have to be ran with pwd as the directory of the file.
+This repo contains my solutions to AoC problems from random years, organized to folders. There is 0 consistency in how the data structures are implemented (as in where the input data is expected to be). Deal with it.
