@@ -20,27 +20,29 @@ func getLen(i int) int {
 	return length
 }
 
-func getNewStones(stone int) []int {
+func getNewStones(stone int) (int, int) {
 	if stone == 0 {
-		return []int{1}
+		return 1, -1
 	}
 
 	length := getLen(stone)
 	if length%2 == 0 {
 		left := stone / int(math.Pow10(length/2))
 		right := stone % int(math.Pow10(length/2))
-		return []int{left, right}
+		return left, right
 	}
 
-	return []int{stone * 2024}
+	return stone * 2024, -1
 }
 
 func blink(stones map[int]int) map[int]int {
 	ret := make(map[int]int)
 	for stone, amt := range stones {
-		for _, n := range getNewStones(stone) {
-			ret[n] += amt
+		l, r := getNewStones(stone)
+		if r != -1 {
+			ret[r] += amt
 		}
+		ret[l] += amt
 	}
 	return ret
 }
