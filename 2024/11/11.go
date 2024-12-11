@@ -3,36 +3,49 @@ package main
 import (
 	"aoc"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
 
-func getNewStones(stone string) []string {
-	num, _ := strconv.Atoi(stone)
-
-	if num == 0 {
-		return []string{"1"}
+func getLen(i int) int {
+	if i == 0 {
+		return 1
 	}
-
-	if len(stone)%2 == 0 {
-		return []string{stone[0 : len(stone)/2], strings.TrimLeft(stone[len(stone)/2:], "0")}
+	length := 0
+	for i != 0 {
+		i /= 10
+		length++
 	}
-
-	return []string{strconv.Itoa(num * 2024)}
+	return length
 }
 
-func blink(stones map[string]int) map[string]int {
-	ret := make(map[string]int)
+func getNewStones(stone int) []int {
+	if stone == 0 {
+		return []int{1}
+	}
+
+	length := getLen(stone)
+	if length%2 == 0 {
+		left := stone / int(math.Pow10(length/2))
+		right := stone % int(math.Pow10(length/2))
+		return []int{left, right}
+	}
+
+	return []int{stone * 2024}
+}
+
+func blink(stones map[int]int) map[int]int {
+	ret := make(map[int]int)
 	for stone, amt := range stones {
-		newStones := getNewStones(stone)
-		for _, n := range newStones {
+		for _, n := range getNewStones(stone) {
 			ret[n] += amt
 		}
 	}
 	return ret
 }
 
-func getStoneAmount(stones map[string]int) int {
+func getStoneAmount(stones map[int]int) int {
 	res := 0
 	for _, amt := range stones {
 		res += amt
@@ -43,9 +56,10 @@ func getStoneAmount(stones map[string]int) int {
 func solve(input string) (int, int) {
 	ans, ans2 := 0, 0
 
-	stones := make(map[string]int)
+	stones := make(map[int]int)
 	for _, s := range strings.Fields(input) {
-		stones[s] = 1
+		num, _ := strconv.Atoi(s)
+		stones[num] = 1
 	}
 
 	for range 25 {
