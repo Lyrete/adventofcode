@@ -21,13 +21,11 @@ fn main() {
         .map(|x| x.trim().split_once("\n").unwrap())
         .collect();
 
-    let mut goodpairs: Vec<usize> = Vec::new();
-    for (idx, pair) in pairs.iter().enumerate().map(|(i, x)| (i + 1, x)) {
-        let mut left_str: String = pair.0.to_string();
-        let mut right_str: String = pair.1.to_string();
+    let goodpairs: Vec<usize> = Vec::new();
+    for (_, pair) in pairs.iter().enumerate().map(|(i, x)| (i + 1, x)) {
+        let left_str: String = pair.0.to_string();
+        let right_str: String = pair.1.to_string();
         let (mut left_p, mut right_p) = (find_parentheses(pair.0), find_parentheses(pair.1));
-
-        let checks: Vec<bool> = Vec::new();
 
         while left_p.len() > 0 && right_p.len() > 0 {
             let (left, right) = (left_p.pop_front().unwrap(), right_p.pop_front().unwrap());

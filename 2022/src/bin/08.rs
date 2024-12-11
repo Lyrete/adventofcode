@@ -105,7 +105,7 @@ fn main() {
 
 fn check_score(x: usize, y: usize, grid: Vec<Vec<u32>>) -> usize {
     let tree = grid[y][x];
-    let GRID_SIZE = grid.first().unwrap().len();
+    let grid_size = grid.first().unwrap().len();
 
     let mut score = 0;
 
@@ -120,7 +120,7 @@ fn check_score(x: usize, y: usize, grid: Vec<Vec<u32>>) -> usize {
     }
 
     let mut right_trees = 0;
-    for rx in x + 1..GRID_SIZE {
+    for rx in x + 1..grid_size {
         right_trees += 1;
         if line[rx] >= tree {
             break;
@@ -137,7 +137,7 @@ fn check_score(x: usize, y: usize, grid: Vec<Vec<u32>>) -> usize {
     }
 
     let mut bot_trees = 0;
-    for dy in y + 1..GRID_SIZE {
+    for dy in y + 1..grid_size {
         bot_trees += 1;
         if grid[dy][x] >= tree {
             break;
@@ -150,6 +150,7 @@ fn check_score(x: usize, y: usize, grid: Vec<Vec<u32>>) -> usize {
 }
 
 //Helper to use for debug
+#[allow(dead_code)]
 fn printer(trees: HashSet<(usize, usize)>, size: usize) {
     let size = size;
 

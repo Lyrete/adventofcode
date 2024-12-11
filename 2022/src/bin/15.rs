@@ -16,8 +16,9 @@ fn to_tuple_pair(input: &str) -> ((isize, isize), (isize, isize)) {
     (start, end)
 }
 
+#[allow(dead_code)]
 fn dist_between(start: (isize, isize), end: (isize, isize)) -> f64 {
-    return f64::sqrt((start.0 - end.0));
+    return f64::sqrt((start.0 - end.0) as f64);
 }
 
 fn main() {
