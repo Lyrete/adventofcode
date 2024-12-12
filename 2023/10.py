@@ -8,7 +8,7 @@ PIPES = {
 }
 
 
-def parse(s: str) -> dict[tuple[int, int], str]:
+def parse(s: str) -> tuple[dict[tuple[int, int], str], tuple[int, int]]:
     points = {}
     start = (-1, -1)
     for y, line in enumerate(s.strip().splitlines()):
@@ -58,7 +58,7 @@ def calculate_inside(path: list[tuple[int, int]]) -> int:
     return int(area - perimeter / 2 + 1)
 
 
-def solve(s: str) -> int:
+def solve(s: str) -> tuple[int, int]:
     points, start = parse(s)
     x, y = start
     deltas = [(1, 0), (-1, 0), (0, 1), (0, -1)]
