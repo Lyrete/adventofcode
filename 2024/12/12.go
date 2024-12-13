@@ -6,11 +6,11 @@ import (
 	"strings"
 )
 
-func parseInputIntoGrid(input string) map[point]string {
-	grid := make(map[point]string)
+func parseInputIntoGrid(input string) map[point]rune {
+	grid := make(map[point]rune)
 	for y, line := range strings.Split(input, "\n") {
 		for x, s := range line {
-			grid[point{x, y}] = string(s)
+			grid[point{x, y}] = s
 		}
 	}
 	return grid
@@ -56,6 +56,10 @@ func (p point) botleft() point {
 func countCornersAndPerimeter(plot map[point]struct{}) (int, int) {
 	cornerCount := 0
 	p := 0
+	if len(plot) == 1 {
+		return 4, 4
+	}
+
 	for b := range plot {
 		top, right, left, bot := b.top(), b.right(), b.left(), b.bot()
 		if !aoc.HasKey(plot, top) {
@@ -108,20 +112,18 @@ func calculatePerimeterAndArea(plot map[point]struct{}) (int, int, int) {
 	return p, A, corners
 }
 
-func findEnclosedArea(grid map[point]string, visited map[point]struct{}, start point) map[point]struct{} {
+func findEnclosedArea(grid map[point]rune, areaRune rune, start point) map[point]struct{} {
 	currentArea := make(map[point]struct{})
 	queue := []point{start}
 	for len(queue) > 0 {
 		checkablePoint := queue[0]
 		queue = queue[1:]
 		currentArea[checkablePoint] = struct{}{}
-		visited[checkablePoint] = struct{}{}
+		grid[checkablePoint] = '.'
 
 		for _, neighbour := range []point{checkablePoint.bot(), checkablePoint.right(), checkablePoint.left(), checkablePoint.top()} {
-			if s, ok := grid[neighbour]; ok && s == grid[checkablePoint] {
-				if _, ok := visited[neighbour]; !ok {
-					queue = append(queue, neighbour)
-				}
+			if r, ok := grid[neighbour]; ok && r == areaRune {
+				queue = append(queue, neighbour)
 			}
 		}
 	}
@@ -135,11 +137,16 @@ func solve(input string) (int, int) {
 	visited := make(map[point]struct{})
 	res, res2 := 0, 0
 
-	for point := range grid {
+	for point, r := range grid {
+		if r == '.' {
+			continue
+		}
 		if _, ok := visited[point]; ok {
 			continue
 		}
-		p, A, sides := calculatePerimeterAndArea(findEnclosedArea(grid, visited, point))
+		plot := findEnclosedArea(grid, r, point)
+		p, A, sides := calculatePerimeterAndArea(plot)
+		clear(plot)
 		//fmt.Println(grid[point], ":", A, "*", sides, "=", A*sides)
 		// fmt.Println()
 		res += p * A
