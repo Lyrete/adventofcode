@@ -7,20 +7,30 @@ import (
 	"strings"
 )
 
-// find unique solution to the problem x(ai​+bj​)+y(ci​+dj​)=ei​+fj
+/** Find unique solution to the problem x(ai​+bj​)+y(ci​+dj​)=ei​+fj using Cramer's rule
+ */
 func findUniqueSolution(a, b, c, d, e, f int) (int, int) {
-	//fmt.Println(a, b, c, d, e, f)
+	// 	The equation can be presented as a simple system of
+	// ax + cy = e
+	// bx + dy = f
+	// And such in matrix form
+	// {a c} {x} = {e}
+	// {b d} {y}   {f}
 	D := a*d - b*c
-	Dx, Dy := (e*d - c*f), (a*f - e*b)
-	//fmt.Println(D)
-	//fmt.Println("det", det)
+	// If the determinant of the first part is != 0 there is only one solution to the equation
+	// If it is 0 there is either infinite or no solutions but we don't really have to consider those cases here
 	if D != 0 {
-		a_press, b_press := Dx/D, Dy/D
-		if a_press*a+b_press*c == e && a_press*b+b_press*d == f {
-			return a_press, b_press
+		// Get the adjugate matrix of x and y separaetely (which is also their determinant)
+		Dx, Dy := (e*d - c*f), (a*f - e*b)
+		// By multiplying it with the inverse of the original determinant we can find the solution
+		x, y := Dx/D, Dy/D
+		// Our results are likely to not actually be natural numbers (but as we're doing int division they get floored to such)
+		// So make sure that the proposed solution is genuinely valid by placing the calculated values in the equation
+		if x*a+y*c == e && x*b+y*d == f {
+			return x, y
 		}
-		return 0, 0
 	}
+	// The infinite cases dont ever occur as there are no negative x or y values so if the solution wasn't found there is no solution
 	return 0, 0
 }
 
