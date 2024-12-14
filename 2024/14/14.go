@@ -24,21 +24,8 @@ type robot struct {
 func (r robot) getPositionAfter(n int, limit_x, limit_y int) vector {
 	ret := vector{r.pos.x + n*r.v.x, r.pos.y + n*r.v.y}
 
-	if ret.x >= 0 && ret.y >= 0 {
-		ret.x = ret.x % limit_x
-		ret.y = ret.y % limit_y
-	} else if ret.x < 0 && ret.y < 0 {
-		//fmt.Println((aoc.AbsInt(ret.x)-1)%limit_x, (aoc.AbsInt(ret.y)-1)%limit_y)
-		//fmt.Println(aoc.AbsInt((aoc.AbsInt(ret.x)-1)%limit_x+1-limit_x), aoc.AbsInt((aoc.AbsInt(ret.y)-1)%limit_y+1-limit_y))
-		ret.x = aoc.AbsInt((aoc.AbsInt(ret.x)-1)%limit_x + 1 - limit_x)
-		ret.y = aoc.AbsInt((aoc.AbsInt(ret.y)-1)%limit_y + 1 - limit_y)
-	} else if ret.y < 0 {
-		ret.y = aoc.AbsInt((aoc.AbsInt(ret.y)-1)%limit_y + 1 - limit_y)
-		ret.x = ret.x % limit_x
-	} else {
-		ret.x = aoc.AbsInt((aoc.AbsInt(ret.x)-1)%limit_x + 1 - limit_x)
-		ret.y = ret.y % limit_y
-	}
+	ret.x = (ret.x%limit_x + limit_x) % limit_x
+	ret.y = (ret.y%limit_y + limit_y) % limit_y
 
 	return ret
 }
@@ -103,7 +90,7 @@ func solvePart2(robots []robot, limit_x, limit_y int) int {
 			best_x = var_x
 		}
 	}
-	fmt.Println(tx, ty)
+	//fmt.Println(tx, ty)
 	iW := powUniversal(limit_x, -1, limit_y)
 	t := tx + ((iW*(ty-tx))%limit_y)*limit_x
 	//printRobotsAfterN(robots, t, limit_x, limit_y)
