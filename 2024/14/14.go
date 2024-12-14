@@ -3,7 +3,6 @@ package main
 import (
 	"aoc"
 	"fmt"
-	"math"
 	"regexp"
 	"strconv"
 	"strings"
@@ -24,8 +23,16 @@ type robot struct {
 func (r robot) getPositionAfter(n int, limit_x, limit_y int) vector {
 	ret := vector{r.pos.x + n*r.v.x, r.pos.y + n*r.v.y}
 
-	ret.x = (ret.x%limit_x + limit_x) % limit_x
-	ret.y = (ret.y%limit_y + limit_y) % limit_y
+	ret.x = ret.x % limit_x
+	ret.y = ret.y % limit_y
+
+	if ret.x < 0 {
+		ret.x += limit_x
+	}
+
+	if ret.y < 0 {
+		ret.y += limit_y
+	}
 
 	return ret
 }
@@ -67,8 +74,8 @@ func solvePart1(robots []robot, limit_x, limit_y int) int {
 func solvePart2(robots []robot, limit_x, limit_y int) int {
 	x_res := make([]float64, len(robots))
 	y_res := make([]float64, len(robots))
-	best_x := math.MaxFloat64
-	best_y := math.MaxFloat64
+	best_x := float64(10000)
+	best_y := float64(10000)
 	tx := 0
 	ty := 0
 
