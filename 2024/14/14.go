@@ -23,43 +23,36 @@ type robot struct {
 func (r robot) getPositionAfter(n int, limit_x, limit_y int) vector {
 	ret := vector{r.pos.x + n*r.v.x, r.pos.y + n*r.v.y}
 
-	ret.x = ret.x % limit_x
-	ret.y = ret.y % limit_y
-
-	if ret.x < 0 {
-		ret.x += limit_x
-	}
-
-	if ret.y < 0 {
-		ret.y += limit_y
-	}
+	ret.x = (ret.x%limit_x + limit_x) % limit_x
+	ret.y = (ret.y%limit_y + limit_y) % limit_y
 
 	return ret
 }
 
 func solvePart1(robots []robot, limit_x, limit_y int) int {
 	quadrants := []int{0, 0, 0, 0}
+	middle, horizon := limit_x/2, limit_y/2
 
 	for _, r := range robots {
 		pos := r.getPositionAfter(100, limit_x, limit_y)
 
 		// topLeft
-		if pos.x < limit_x/2 && pos.y < limit_y/2 {
+		if pos.x < middle && pos.y < horizon {
 			quadrants[0] += 1
 		}
 
 		// topright
-		if pos.x > limit_x/2 && pos.y < limit_y/2 {
+		if pos.x > middle && pos.y < horizon {
 			quadrants[1] += 1
 		}
 
 		// botleft
-		if pos.x < limit_x/2 && pos.y > limit_y/2 {
+		if pos.x < middle && pos.y > horizon {
 			quadrants[2] += 1
 		}
 
 		// botright
-		if pos.x > limit_x/2 && pos.y > limit_y/2 {
+		if pos.x > middle && pos.y > horizon {
 			quadrants[3] += 1
 		}
 
