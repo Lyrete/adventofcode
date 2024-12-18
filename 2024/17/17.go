@@ -135,7 +135,7 @@ func findA(instructions []string, a_val, depth int) int {
 		return a_val
 	}
 	for i := range 8 {
-		checkablea := a_val*8 + i
+		checkablea := a_val<<3 + i
 		reg := registers{checkablea, 0, 0, 0}
 		for reg.instructionPointer < len(instructions) {
 			res := reg.doOp(instructions[reg.instructionPointer], instructions[reg.instructionPointer+1])

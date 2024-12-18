@@ -3,6 +3,7 @@ package aoc
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -89,4 +90,16 @@ func (c *Coord) Set(x int, y int) {
 func HasKey[K comparable, V any](m map[K]V, key K) bool {
 	_, ok := m[key]
 	return ok
+}
+
+func (c *Coord) ManhattanDistance(other Coord) int {
+	return AbsDiffInt(c.X, other.X) + AbsDiffInt(c.Y, other.Y)
+}
+
+func (c *Coord) Neighbours() []Coord {
+	return []Coord{{c.X + 1, c.Y}, {c.X, c.Y + 1}, {c.X - 1, c.Y}, {c.X, c.Y - 1}}
+}
+
+func (c *Coord) AsString() string {
+	return fmt.Sprintf("%d,%d", c.X, c.Y)
 }
