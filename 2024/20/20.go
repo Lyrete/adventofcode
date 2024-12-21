@@ -74,7 +74,7 @@ func findCheatablePositions(path []aoc.Coord, minSaved int) int {
 func findCheatableWithMaxLength(path []aoc.Coord, startIdx, maxLength int, minSaved int) int {
 	start := path[startIdx]
 	res := 0
-	i := startIdx + minSaved
+	i := startIdx + minSaved + 2
 	for i < len(path) {
 		end := path[i]
 		cheatLength := start.ManhattanDistance(end)
@@ -85,7 +85,7 @@ func findCheatableWithMaxLength(path []aoc.Coord, startIdx, maxLength int, minSa
 
 		realDist := i - startIdx
 		savedDist := realDist - cheatLength
-		if cheatLength <= maxLength && savedDist >= minSaved {
+		if savedDist >= minSaved {
 			res += 1
 		}
 
