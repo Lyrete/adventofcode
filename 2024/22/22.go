@@ -20,40 +20,37 @@ func parse(input string) []int {
 func solve(input string) (int, int) {
 	res, res2 := 0, 0
 	initial := parse(input)
-	lastDigit := [5]int{}
+	diffs := [4]int{}
 	sequences := make(map[[4]int]int)
 	for _, secret := range initial {
-		lastDigit[0] = secret % 10
+		prev := secret % 10
 		updated := make(map[[4]int]struct{})
 		for n := range ITERATIONS {
 			secret = getNext(secret)
 			last := secret % 10
 			if n > 3 {
-				lastDigit[0] = lastDigit[1]
-				lastDigit[1] = lastDigit[2]
-				lastDigit[2] = lastDigit[3]
-				lastDigit[3] = lastDigit[4]
-				lastDigit[4] = last
-
-				curr := [4]int{lastDigit[1] - lastDigit[0],
-					lastDigit[2] - lastDigit[1],
-					lastDigit[3] - lastDigit[2],
-					last - lastDigit[3]}
-
-				if _, ok := updated[curr]; !ok {
-					sequences[curr] += last
-					updated[curr] = struct{}{}
+				if _, ok := updated[diffs]; !ok {
+					sequences[diffs] += prev
+					updated[diffs] = struct{}{}
 				}
 
+				diffs[0] = diffs[1]
+				diffs[1] = diffs[2]
+				diffs[2] = diffs[3]
+				diffs[3] = last - prev
+
 			} else {
-				lastDigit[n+1] = last
+				diffs[n] = last - prev
 			}
+			prev = last
 		}
 
 		res += secret
 	}
+	//fmt.Println(sequences)
 	for _, v := range sequences {
 		if res2 < v {
+			//fmt.Println("best", k)
 			res2 = v
 		}
 	}
