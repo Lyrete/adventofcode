@@ -1,5 +1,6 @@
 use std::fs::read_to_string;
 
+const DAY: u8 = 1;
 const EXAMPLE: &'static str = "
 L68
 L30
@@ -12,65 +13,42 @@ L99
 R14
 L82
 ";
-
 const START: i16 = 50;
 
-fn task1(input: String) -> u16 {
+fn solve(input: String) -> (u16, u16) {
     let instructions = input
         .split_ascii_whitespace()
         .map(|e| e.replace("L", "-").replace("R", "").parse::<i16>().unwrap())
         .collect::<Vec<i16>>();
 
     let mut zero_hits: u16 = 0;
+    let mut passes: u16 = 0;
     instructions.iter().fold(START, |acc, elem| {
-        let curr = (acc + elem) % 100;
-        if curr == 0 {
-            zero_hits += 1
-        }
-        curr
-    });
-    zero_hits
-}
-
-fn task2(input: String) -> u16 {
-    let instructions = input
-        .split_ascii_whitespace()
-        .map(|e| e.replace("L", "-").replace("R", "").parse::<i16>().unwrap())
-        .collect::<Vec<i16>>();
-
-    let mut zero_hits: u16 = 0;
-    instructions.iter().fold(START, |acc, elem| {
-        let new_pos: i16 = acc + elem;
-
-        let mut curr: i16 = new_pos % 100;
+        let mut curr = (acc + elem) % 100;
         if curr < 0 {
             curr = 100 + curr
         }
 
-        let mut extra_hits = (elem / 100).abs();
+        passes += (elem / 100).abs() as u16;
 
         if curr == 0 {
-            extra_hits += 1;
+            zero_hits += 1
         } else if acc != 0 && elem < &0 && curr > acc || elem > &0 && curr < acc {
-            extra_hits += 1;
+            // Really dumb check but i cba
+            passes += 1;
         }
-        zero_hits += extra_hits as u16;
         curr
     });
-    zero_hits
+
+    (zero_hits, zero_hits + passes)
 }
 
 fn main() {
-    println!("Example part 1: {:?}", task1(EXAMPLE.to_string()));
-    println!(
-        "Real input part 1: {:?}",
-        task1(read_to_string("./inputs/01.txt").unwrap())
-    );
-    println!();
+    let example_res = solve(EXAMPLE.to_string());
+    println!("Example:");
+    println!("{:?} {:?}", example_res.0, example_res.1);
 
-    println!("Example part 2: {:?}", task2(EXAMPLE.to_string()));
-    println!(
-        "Real input part 2: {:?}",
-        task2(read_to_string("./inputs/01.txt").unwrap())
-    );
+    let actual_res = solve(read_to_string(format!("./inputs/{:02}.txt", DAY)).unwrap());
+    println!("Actual:");
+    println!("{:?} {:?}", actual_res.0, actual_res.1);
 }
