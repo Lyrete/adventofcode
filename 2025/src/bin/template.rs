@@ -1,4 +1,4 @@
-use std::fs::read_to_string;
+use std::{fs::read_to_string, time::SystemTime};
 
 const DAY: u8 = 0;
 const EXAMPLE: &'static str = "";
@@ -12,7 +12,13 @@ fn main() {
     println!("Example:");
     println!("{:?} {:?}", example_res.0, example_res.1);
 
+    let start = SystemTime::now();
     let actual_res = solve(read_to_string(format!("./inputs/{:02}.txt", DAY)).unwrap());
+    let end = SystemTime::now();
+
     println!("Actual:");
     println!("{:?} {:?}", actual_res.0, actual_res.1);
+
+    println!();
+    println!("Execution time: {:?}", end.duration_since(start).unwrap())
 }
