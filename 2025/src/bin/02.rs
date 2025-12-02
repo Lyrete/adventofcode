@@ -1,4 +1,4 @@
-use std::fs::read_to_string;
+use std::{fs::read_to_string, time::SystemTime};
 
 const DAY: u8 = 2;
 const EXAMPLE: &'static str = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124";
@@ -13,7 +13,7 @@ fn solve(input: String) -> (usize, usize) {
             |id| {
                 let id_length = (id as f64).log10().floor() as u32 + 1;
                 let mut chunk_size: u32 = (id_length / 2) as u32;
-                while chunk_size > 0 {
+                while chunk_size >= 1 && chunk_size >= id_length / 2 {
                     // If not divisible into this size chunk skip loop
                     if id_length % chunk_size != 0 {
                         chunk_size -= 1;
@@ -40,7 +40,7 @@ fn solve(input: String) -> (usize, usize) {
                         break;
                     }
 
-                    chunk_size -= 1;
+                    chunk_size -= 1
                 }
             },
         )
@@ -54,7 +54,13 @@ fn main() {
     println!("Example:");
     println!("{:?} {:?}", example_res.0, example_res.1);
 
+    let start = SystemTime::now();
     let actual_res = solve(read_to_string(format!("./inputs/{:02}.txt", DAY)).unwrap());
+    let end = SystemTime::now();
+
     println!("Actual:");
     println!("{:?} {:?}", actual_res.0, actual_res.1);
+
+    println!();
+    println!("Execution time: {:?}", end.duration_since(start).unwrap())
 }
