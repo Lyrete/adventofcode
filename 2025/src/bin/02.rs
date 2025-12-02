@@ -3,6 +3,21 @@ use std::{fs::read_to_string, time::SystemTime};
 const DAY: u8 = 2;
 const EXAMPLE: &'static str = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124";
 
+static DIVISORS: &'static [usize] = &[
+    1,
+    10,
+    100,
+    1000,
+    10000,
+    100000,
+    1000000,
+    10000000,
+    100000000,
+    1000000000,
+    10000000000,
+    100000000000,
+];
+
 fn solve(input: String) -> (usize, usize) {
     let mut first: usize = 0;
     let mut second: usize = 0;
@@ -11,11 +26,11 @@ fn solve(input: String) -> (usize, usize) {
         let ends = e.split("-").collect::<Vec<&str>>();
         (ends[0].parse::<usize>().unwrap()..(ends[1].parse::<usize>().unwrap() + 1)).for_each(
             |id| {
-                let id_length = (id.ilog10() + 1) as u32;
-                let mut chunk_size = (id_length / 2) as u32;
-                if id_length == 1 {
+                if id < 10 {
                     return;
                 }
+                let id_length = (id.ilog10() + 1) as u8;
+                let mut chunk_size = id_length / 2;
 
                 while chunk_size >= 1 && chunk_size >= id_length / 2 {
                     // If not divisible into this size chunk skip loop
@@ -24,7 +39,7 @@ fn solve(input: String) -> (usize, usize) {
                         continue;
                     }
 
-                    let chunk_divisor = 10_usize.pow(chunk_size);
+                    let chunk_divisor = DIVISORS[chunk_size as usize];
                     let check_chunk = id % chunk_divisor;
                     let mut remaining_id = id / chunk_divisor;
                     while remaining_id > 0 {
