@@ -11,23 +11,29 @@ fn solve(input: String) -> (usize, usize) {
         let ends = e.split("-").collect::<Vec<&str>>();
         (ends[0].parse::<usize>().unwrap()..(ends[1].parse::<usize>().unwrap() + 1)).for_each(
             |id| {
-                let num_str = id.to_string();
-                let top_end = num_str.len();
-                let mut chunk_size = top_end / 2;
+                let id_length = (id as f64).log10().floor() as u32 + 1;
+                let mut chunk_size: u32 = (id_length / 2) as u32;
                 while chunk_size > 0 {
-                    let chunk = &num_str[0..chunk_size];
-                    let mut check_start = chunk_size;
-                    while check_start + chunk_size <= top_end {
-                        let check_chunk = &num_str[check_start..check_start + chunk_size];
+                    // If not divisible into this size chunk skip loop
+                    if id_length % chunk_size != 0 {
+                        chunk_size -= 1;
+                        continue;
+                    }
 
-                        if check_chunk != chunk {
+                    let chunk_divisor = 10_usize.pow(chunk_size);
+                    let check_chunk = id % chunk_divisor;
+                    let mut remaining_id = id / chunk_divisor;
+                    while remaining_id > 0 {
+                        let next_chunk = remaining_id % chunk_divisor;
+
+                        if next_chunk != check_chunk {
                             break;
                         }
 
-                        check_start += chunk_size
+                        remaining_id /= chunk_divisor;
                     }
-                    if check_start >= top_end {
-                        if chunk_size == top_end / 2 {
+                    if remaining_id == 0 {
+                        if chunk_size == id_length / 2 {
                             first += id
                         }
                         second += id;
