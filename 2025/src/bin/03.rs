@@ -38,7 +38,7 @@ fn get_max_jolt(bank: &str, jolt_length: u8) -> usize {
 
         let trunc = (0..curr_length).rev().find_map(|i| {
             let divisor = DIVISORS[i];
-            let truncated = result / divisor;
+            let truncated = result / divisor; // Truncated value, with last digit to compare
             let search_digit = truncated % 10;
             let trunc_length = curr_length - i;
 
@@ -66,8 +66,6 @@ fn solve(input: String) -> (usize, usize) {
 
     let res1: usize = banks.iter().map(|bank| get_max_jolt(bank, 2)).sum();
     let res2: usize = banks.iter().map(|bank| get_max_jolt(bank, 12)).sum();
-    // let res2 = 0;
-    // let res1 = 0;
 
     (res1, res2)
 }
