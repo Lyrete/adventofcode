@@ -1,4 +1,4 @@
-use std::fs::read_to_string;
+use std::{fs::read_to_string, time::SystemTime};
 
 const DAY: u8 = 1;
 const EXAMPLE: &'static str = "
@@ -24,10 +24,7 @@ fn solve(input: String) -> (u16, u16) {
     let mut zero_hits: u16 = 0;
     let mut passes: u16 = 0;
     instructions.iter().fold(START, |acc, elem| {
-        let mut curr = (acc + elem) % 100;
-        if curr < 0 {
-            curr = 100 + curr
-        }
+        let curr = ((acc + elem) % 100 + 100) % 100;
 
         passes += (elem / 100).abs() as u16;
 
@@ -48,7 +45,13 @@ fn main() {
     println!("Example:");
     println!("{:?} {:?}", example_res.0, example_res.1);
 
+    let start = SystemTime::now();
     let actual_res = solve(read_to_string(format!("./inputs/{:02}.txt", DAY)).unwrap());
+    let end = SystemTime::now();
+
     println!("Actual:");
     println!("{:?} {:?}", actual_res.0, actual_res.1);
+
+    println!();
+    println!("Execution time: {:?}", end.duration_since(start).unwrap())
 }
