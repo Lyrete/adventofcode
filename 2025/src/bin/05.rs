@@ -72,7 +72,7 @@ fn solve(input: String) -> (usize, usize) {
             .filter(|(comp_start, comp_end)| {
                 !(comp_start >= &new_range.0 && comp_end <= &new_range.1)
             })
-            .map(|p| *p)
+            .map(|&p| p)
             .collect();
 
         valid_ranges.push(new_range);
