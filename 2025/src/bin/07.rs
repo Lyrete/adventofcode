@@ -28,9 +28,13 @@ fn solve(input: String) -> (usize, usize) {
 
     input.trim().split('\n').enumerate().for_each(|(y, line)| {
         line.char_indices().for_each(|(x, c)| {
+            if splitters.len() < x + 1 {
+                splitters.push(Vec::new());
+            }
+
             match c {
                 START => start = x,
-                SPLITTER => splitters.push((x, y)),
+                SPLITTER => splitters[x].push((x, y)),
                 _ => {}
             };
         });
@@ -49,7 +53,7 @@ fn solve(input: String) -> (usize, usize) {
         let mut x = 0;
         while x < width {
             let curr = beams[x];
-            if curr > 0 && splitters.contains(&(x, y)) {
+            if curr > 0 && splitters[x].contains(&(x, y)) {
                 res1 += 1;
                 beams[x] = 0;
                 beams[x - 1] += curr;
