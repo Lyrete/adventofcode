@@ -65,9 +65,9 @@ fn solve(input: String) -> (u32, u32) {
             }
         } else {
             let (_, present_grid) = chunk.split_once(':').unwrap();
-            let area = present_grid.chars().filter(|e| e == &'#').count() as u16;
+            let area = present_grid.chars().filter(|c| c != &'\n').count() as u16 - 1;
             if area > max_area {
-                max_area = area + 1;
+                max_area = area;
             }
         }
     }
